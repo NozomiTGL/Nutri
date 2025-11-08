@@ -6,5 +6,23 @@ use Illuminate\Database\Eloquent\Model;
 
 class Usuario extends Model
 {
-    //
+    use HasFactory;
+
+    protected $fillable = ['nombre', 'email', 'password', 'rol'];
+
+    public function pedidos() {
+        return $this->hasMany(Pedido::class);
+    }
+
+    public function cuestionarios() {
+        return $this->hasMany(Cuestionario::class);
+    }
+
+    public function recomendaciones() {
+        return $this->hasMany(Recomendacion::class, 'usuario_id');
+    }
+
+    public function articulos() {
+        return $this->hasMany(Articulo::class, 'autor_id');
+    }
 }
