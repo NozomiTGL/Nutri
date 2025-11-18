@@ -15,9 +15,17 @@ return new class extends Migration
             $table->id();
             $table->string('nombre');
             $table->string('email')->unique();
+            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->enum('rol', ['cliente', 'nutricionista', 'admin']);
+            $table->rememberToken();
             $table->timestamps();
+        });
+
+        Schema::create('usuarios_password_reset_tokens', function (Blueprint $table) {
+            $table->string('email')->primary();
+            $table->string('token');
+            $table->timestamp('created_at')->nullable();
         });
     }
 
@@ -26,6 +34,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('usuarios_password_reset_tokens');
         Schema::dropIfExists('usuarios');
     }
 };

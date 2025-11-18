@@ -15,4 +15,3 @@ class Articulo extends Model
         return $this->belongsTo(Usuario::class, 'autor_id');
     }
 }
-
