@@ -1,12 +1,12 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <h2 class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
             Tienda de suplementos
         </h2>
     </x-slot>
 
     <div class="py-8">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
 
             @if ($errors->has('tienda'))
                 <div class="mb-4 text-sm text-red-500">
@@ -20,7 +20,7 @@
                 @csrf
 
                 @if($productos->isEmpty())
-                    <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
+                    <div class="p-6 overflow-hidden bg-white shadow-sm dark:bg-gray-800 sm:rounded-lg">
                         <p class="text-gray-500 dark:text-gray-400">
                             Por el momento no hay productos disponibles.
                         </p>
@@ -28,18 +28,18 @@
                 @else
                     <div class="grid gap-6 md:grid-cols-3">
                         @foreach($productos as $index => $producto)
-                            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-4 flex flex-col justify-between">
+                            <div class="flex flex-col justify-between p-4 overflow-hidden bg-white shadow-sm dark:bg-gray-800 sm:rounded-lg">
                                 <div>
-                                    <h3 class="text-lg font-semibold mb-1">
+                                    <h3 class="mb-1 text-lg font-semibold">
                                         {{ $producto->nombre }}
                                     </h3>
-                                    <p class="text-xs text-gray-400 mb-1">
+                                    <p class="mb-1 text-xs text-gray-400">
                                         {{ $producto->categoria->nombre ?? 'Sin categoría' }}
                                     </p>
-                                    <p class="text-sm mb-2">
+                                    <p class="mb-2 text-sm">
                                         {{ Str::limit($producto->descripcion, 80) }}
                                     </p>
-                                    <p class="font-bold mb-1">
+                                    <p class="mb-1 font-bold">
                                         ${{ number_format($producto->precio, 2) }}
                                     </p>
                                     <p class="text-xs text-gray-400">
@@ -48,7 +48,7 @@
                                 </div>
 
                                 <div class="mt-3">
-                                    <label class="block text-xs mb-1">
+                                    <label class="block mb-1 text-xs">
                                         Cantidad
                                     </label>
                                     <input type="hidden"
@@ -59,15 +59,15 @@
                                            value="0"
                                            min="0"
                                            max="{{ $producto->stock }}"
-                                           class="w-full text-sm rounded border-gray-300 dark:bg-gray-900 dark:border-gray-700">
+                                           class="w-full text-sm border-gray-300 rounded dark:bg-gray-900 dark:border-gray-700">
                                 </div>
                             </div>
                         @endforeach
                     </div>
 
-                    <div class="mt-6 flex justify-end">
+                    <div class="flex justify-end mt-6">
                         <button type="submit"
-                                class="px-6 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 text-sm font-semibold">
+                                class="px-6 py-2 text-sm font-semibold text-white bg-indigo-600 rounded hover:bg-indigo-700">
                             Realizar pedido
                         </button>
                     </div>
