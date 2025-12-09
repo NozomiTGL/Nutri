@@ -7,9 +7,7 @@ use App\Models\Categoria;
 
 class AdminController extends Controller
 {
-    /**
-     * Muestra el panel de administración.
-     */
+   
     public function index()
     {
         $totalProductos  = Producto::count();

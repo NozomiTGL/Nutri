@@ -8,9 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ClienteRecomendacionController extends Controller
 {
-    /**
-     * Muestra las recomendaciones del cliente autenticado.
-     */
+   
     public function index()
     {
         $user = Auth::user();

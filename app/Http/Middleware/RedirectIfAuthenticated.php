@@ -12,7 +12,7 @@ class RedirectIfAuthenticated
     /**
      * Handle an incoming request.
      *
-     * @param  array<int, string>|string|null  ...$guards
+     * @param  array<int, 
      */
     public function handle(Request $request, Closure $next, ...$guards)
     {

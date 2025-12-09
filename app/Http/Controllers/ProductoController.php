@@ -8,9 +8,7 @@ use Illuminate\Http\Request;
 
 class ProductoController extends Controller
 {
-    /**
-     * Lista todos los productos.
-     */
+    
     public function index()
     {
         $productos = Producto::with('categoria')->get();
@@ -18,9 +16,7 @@ class ProductoController extends Controller
         return view('admin.productos.index', compact('productos'));
     }
 
-    /**
-     * Muestra el formulario para crear un producto.
-     */
+    
     public function create()
     {
         $categorias = Categoria::all();
@@ -28,9 +24,7 @@ class ProductoController extends Controller
         return view('admin.productos.create', compact('categorias'));
     }
 
-    /**
-     * Guarda el nuevo producto en la base de datos.
-     */
+    
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -42,7 +36,7 @@ class ProductoController extends Controller
             'marca'       => 'required|string|max:255',
         ]);
 
-    // Solo creamos con los datos validados
+
         Producto::create($data);
 
         return redirect()
@@ -50,9 +44,7 @@ class ProductoController extends Controller
             ->with('success', 'Producto creado correctamente.');
     }
 
-    /**
-     * Muestra el formulario para editar un producto.
-     */
+    
     public function edit(Producto $producto)
     {
         $categorias = Categoria::all();
@@ -60,9 +52,7 @@ class ProductoController extends Controller
         return view('admin.productos.edit', compact('producto', 'categorias'));
     }
 
-    /**
-     * Actualiza un producto existente.
-     */
+    
     public function update(Request $request, Producto $producto)
     {
         $request->validate([
@@ -81,9 +71,7 @@ class ProductoController extends Controller
             ->with('success', 'Producto actualizado correctamente.');
     }
 
-    /**
-     * Elimina un producto.
-     */
+    
     public function destroy(Producto $producto)
     {
         $producto->delete();

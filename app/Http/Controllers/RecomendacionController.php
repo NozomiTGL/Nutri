@@ -10,10 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 class RecomendacionController extends Controller
 {
-    /**
-     * Formulario para que la nutrióloga cree una recomendación
-     * para una evaluación específica.
-     */
+    
     public function create(Evaluacion $evaluacion)
     {
         $productos = Producto::with('categoria')->get();
@@ -21,9 +18,7 @@ class RecomendacionController extends Controller
         return view('nutri.recomendaciones.create', compact('evaluacion', 'productos'));
     }
 
-    /**
-     * Guarda la recomendación y la relación con productos.
-     */
+    
     public function store(Request $request, Evaluacion $evaluacion)
     {
         $request->validate([
@@ -42,7 +37,6 @@ class RecomendacionController extends Controller
             'descripcion'   => $request->descripcion,
         ]);
 
-    // Vincular productos seleccionados + dosis opcional
         $attachData = [];
         foreach ($request->productos as $productoId) {
             $attachData[$productoId] = [
@@ -58,9 +52,7 @@ class RecomendacionController extends Controller
     }
 
 
-    /**
-     * Listado de recomendaciones para el cliente logueado.
-     */
+   
     public function clienteIndex()
     {
         $user = Auth::user();

@@ -8,23 +8,18 @@ use Illuminate\Support\Facades\Auth;
 
 class EvaluacionController extends Controller
 {
-    /**
-     * FORMULARIO para que el cliente cree/actualice su evaluación.
-     * (Un cliente solo tendrá UNA evaluación).
-     */
+    
     public function clienteForm()
     {
         $user = Auth::user();
 
-        // Traemos la primera evaluación del cliente (si existe)
+        
         $evaluacion = $user->evaluaciones()->first();
 
         return view('cliente.evaluacion_form', compact('evaluacion'));
     }
 
-    /**
-     * Guarda una nueva evaluación para el cliente.
-     */
+    
     public function clienteStore(Request $request)
     {
         $user = Auth::user();
@@ -37,7 +32,7 @@ class EvaluacionController extends Controller
             'restricciones'    => 'nullable|string',
         ]);
 
-        // Si ya tiene evaluación, no creamos otra
+        
         if ($user->evaluaciones()->exists()) {
             return redirect()
                 ->route('cliente.evaluacion.form')
@@ -58,9 +53,7 @@ class EvaluacionController extends Controller
             ->with('success', 'Evaluación guardada correctamente.');
     }
 
-    /**
-     * Actualiza la evaluación existente del cliente.
-     */
+    
     public function clienteUpdate(Request $request)
     {
         $user = Auth::user();
@@ -87,9 +80,7 @@ class EvaluacionController extends Controller
             ->with('success', 'Evaluación actualizada correctamente.');
     }
 
-    /**
-     * LISTADO para que la nutrióloga vea todas las evaluaciones.
-     */
+  
     public function nutriIndex()
     {
         $evaluaciones = Evaluacion::with('user')->latest()->get();
@@ -97,9 +88,7 @@ class EvaluacionController extends Controller
         return view('nutri.evaluaciones.index', compact('evaluaciones'));
     }
 
-    /**
-     * Detalle de una evaluación para la nutrióloga.
-     */
+ 
     public function nutriShow(Evaluacion $evaluacion)
     {
         $evaluacion->load('user');

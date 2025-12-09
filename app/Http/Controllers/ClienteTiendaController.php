@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 
 class ClienteTiendaController extends Controller
 {
-    // Listado de productos para el cliente
+    
     public function index()
     {
         $productos = Producto::with('categoria')
@@ -22,7 +22,7 @@ class ClienteTiendaController extends Controller
         return view('cliente.tienda', compact('productos'));
     }
 
-    // Crear pedido sencillo con productos seleccionados
+    
     public function checkout(Request $request)
     {
         $request->validate([
@@ -42,7 +42,7 @@ class ClienteTiendaController extends Controller
             foreach ($request->productos as $item) {
                 $cantidad = (int) ($item['cantidad'] ?? 0);
 
-                // Si la cantidad es 0, lo saltamos
+                
                 if ($cantidad <= 0) {
                     continue;
                 }
@@ -66,7 +66,7 @@ class ClienteTiendaController extends Controller
                     'precio_unitario' => $producto->precio,
                 ];
 
-                // Descontar stock y guardar
+                
                 $producto->stock -= $cantidad;
                 $producto->save();
             }
@@ -90,7 +90,7 @@ class ClienteTiendaController extends Controller
 
             DB::commit();
 
-            // Ir directo a la factura del pedido creado
+            
             return redirect()
                 ->route('cliente.pedidos.show', $pedido)
                 ->with('success', 'Pedido realizado correctamente.');

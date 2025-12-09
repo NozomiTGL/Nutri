@@ -8,14 +8,12 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ClienteMiddleware
 {
-    /**
-     * Handle an incoming request.
-     */
+    
     public function handle(Request $request, Closure $next): Response
     {
         $user = $request->user();
 
-        // Rol 1 = Cliente
+        
         if (!$user || $user->role !== 1) {
             abort(403, 'Acceso solo para clientes.');
         }
