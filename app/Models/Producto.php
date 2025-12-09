@@ -2,24 +2,40 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Producto extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nombre', 'descripcion', 'precio', 'stock', 'marca', 'imagen', 'categoria_id'];
+    // Aseguramos el nombre de la tabla:
+    protected $table = 'productos';
 
-    public function categoria() {
+    // Campos que se pueden guardar/actualizar por asignación masiva
+    protected $fillable = [
+        'nombre',
+        'descripcion',
+        'precio',
+        'stock',
+        'marca',
+        'categoria_id',
+    ];
+
+    /**
+     * Relación: un producto pertenece a una categoría.
+     */
+    public function categoria()
+    {
         return $this->belongsTo(Categoria::class);
     }
 
-    public function pedidos() {
-        return $this->belongsToMany(Pedido::class, 'detalle_pedidos')->withPivot('cantidad', 'precio_unitario');
-    }
-
-    public function recomendaciones() {
-        return $this->belongsToMany(Recomendacion::class, 'producto_recomendacion');
+    /**
+     * Relación muchos a muchos con recomendaciones
+     * (si ya la tenías).
+     */
+    public function recomendaciones()
+    {
+        return $this->belongsToMany(Recomendacion::class, 'producto_recomendacion')->withPivot('dosis')->withTimestamps();
     }
 }

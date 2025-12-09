@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('titulo');
             $table->text('contenido');
             $table->string('imagen')->nullable();
-            $table->foreignId('autor_id')->constrained('usuarios')->onDelete('cascade');
+            $table->foreignId('autor_id')->constrained('users')->onDelete('cascade');
             $table->date('fecha');
             $table->timestamps();
         });

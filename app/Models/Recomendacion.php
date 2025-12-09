@@ -2,28 +2,36 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Recomendacion extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['usuario_id', 'nutricionista_id', 'cuestionario_id', 'comentarios', 'fecha'];
+    protected $table = 'recomendaciones';
 
-    public function usuario() {
-        return $this->belongsTo(Usuario::class, 'usuario_id');
+    protected $fillable = [
+        'evaluacion_id',
+        'user_id',
+        'titulo',
+        'descripcion',
+    ];
+
+    public function evaluacion()
+    {
+        return $this->belongsTo(Evaluacion::class);
     }
 
-    public function nutricionista() {
-        return $this->belongsTo(Usuario::class, 'nutricionista_id');
+    public function nutri()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function cuestionario() {
-        return $this->belongsTo(Cuestionario::class);
-    }
-
-    public function productos() {
-        return $this->belongsToMany(Producto::class, 'producto_recomendacion');
+    public function productos()
+    {
+        return $this->belongsToMany(Producto::class, 'producto_recomendacion')
+                    ->withPivot('dosis')
+                    ->withTimestamps();
     }
 }

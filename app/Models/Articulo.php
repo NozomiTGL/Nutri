@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\User;
 
 class Articulo extends Model
 {
@@ -12,6 +13,6 @@ class Articulo extends Model
     protected $fillable = ['titulo', 'contenido', 'imagen', 'autor_id', 'fecha'];
 
     public function autor() {
-        return $this->belongsTo(Usuario::class, 'autor_id');
+        return $this->belongsTo(User::class, 'autor_id');
     }
 }

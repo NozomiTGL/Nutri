@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('cuestionarios', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('usuario_id')->constrained('usuarios')->onDelete('cascade');
+            $table->foreignId('usuario_id')->constrained('users')->onDelete('cascade');
             $table->string('objetivo');
             $table->text('alergias')->nullable();
             $table->text('restricciones')->nullable();
