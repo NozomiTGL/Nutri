@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -43,6 +44,28 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'role' => 'integer',
         ];
     }
+
+    public function isAdmin(): bool
+    {
+        return $this->role === 3;
+    }
+
+    public function isNutri(): bool
+    {
+        return $this->role === 2;
+    }
+
+    public function isCliente(): bool
+    {
+        return $this->role === 1;
+    }
+
+    public function evaluaciones()
+    {
+        return $this->hasMany(Evaluacion::class);
+    }
+
 }

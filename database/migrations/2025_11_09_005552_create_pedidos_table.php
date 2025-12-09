@@ -10,14 +10,15 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-    {Schema::create('pedidos', function (Blueprint $table) {
-    $table->id();
-    $table->foreignId('usuario_id')->constrained('usuarios')->onDelete('cascade');
-    $table->enum('estado', ['pendiente', 'procesado', 'enviado', 'cancelado']);
-    $table->decimal('total', 10, 2);
-    $table->date('fecha');
-    $table->timestamps();
-});
+    {
+        Schema::create('pedidos', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('usuario_id'); // <- ESTA es la vieja
+            $table->decimal('total', 8, 2);
+            $table->string('estado')->default('pendiente');
+            $table->timestamps();
+        });
+
     }
 
     /**

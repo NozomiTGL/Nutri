@@ -2,64 +2,73 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Evaluacion;
+use App\Models\Producto;
 use App\Models\Recomendacion;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RecomendacionController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Formulario para que la nutrióloga cree una recomendación
+     * para una evaluación específica.
      */
-    public function index()
+    public function create(Evaluacion $evaluacion)
     {
-        //
+        $productos = Producto::with('categoria')->get();
+
+        return view('nutri.recomendaciones.create', compact('evaluacion', 'productos'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Guarda la recomendación y la relación con productos.
      */
-    public function create()
+    public function store(Request $request, Evaluacion $evaluacion)
     {
-        //
+        $request->validate([
+            'titulo'      => 'required|string|max:255',
+            'descripcion' => 'required|string',
+            'productos'   => 'required|array',
+            'productos.*' => 'exists:productos,id',
+        ]);
+
+        $nutri = Auth::user();
+
+        $recomendacion = Recomendacion::create([
+            'evaluacion_id' => $evaluacion->id,
+            'user_id'       => $nutri->id,
+            'titulo'        => $request->titulo,
+            'descripcion'   => $request->descripcion,
+        ]);
+
+    // Vincular productos seleccionados + dosis opcional
+        $attachData = [];
+        foreach ($request->productos as $productoId) {
+            $attachData[$productoId] = [
+                'dosis' => $request->input('dosis.' . $productoId) ?? null,
+            ];
+        }
+
+        $recomendacion->productos()->attach($attachData);
+
+        return redirect()
+            ->route('nutri.evaluaciones.show', $evaluacion)
+            ->with('success', 'Recomendación creada correctamente.');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
     /**
-     * Display the specified resource.
+     * Listado de recomendaciones para el cliente logueado.
      */
-    public function show(Recomendacion $recomendacion)
+    public function clienteIndex()
     {
-        //
-    }
+        $user = Auth::user();
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Recomendacion $recomendacion)
-    {
-        //
-    }
+        $evaluaciones = $user->evaluaciones()
+            ->with(['recomendaciones.productos.categoria'])
+            ->get();
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Recomendacion $recomendacion)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Recomendacion $recomendacion)
-    {
-        //
+        return view('cliente.recomendaciones.index', compact('evaluaciones'));
     }
 }
