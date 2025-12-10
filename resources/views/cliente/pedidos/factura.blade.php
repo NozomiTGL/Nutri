@@ -1,15 +1,15 @@
 {{-- resources/views/cliente/pedidos/factura.blade.php --}}
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <h2 class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
             Factura del pedido #{{ $pedido->id }}
         </h2>
     </x-slot>
 
     <div class="py-8">
-        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8 space-y-6">
+        <div class="max-w-4xl mx-auto space-y-6 sm:px-6 lg:px-8">
 
-            <div class="bg-white dark:bg-gray-800 shadow sm:rounded-lg p-6">
+            <div class="p-6 bg-white shadow dark:bg-gray-800 sm:rounded-lg">
                 <div class="flex justify-between mb-4 text-sm">
                     <div>
                         <p class="font-semibold">Cliente:</p>
@@ -25,7 +25,7 @@
                     </div>
                 </div>
 
-                <table class="min-w-full text-sm text-left mt-4">
+                <table class="min-w-full mt-4 text-sm text-left">
                     <thead>
                         <tr class="border-b border-gray-700">
                             <th class="px-3 py-2">Producto</th>
@@ -67,7 +67,7 @@
                     ← Volver al historial
                 </a>
                 <button onclick="window.print()"
-                        class="px-4 py-2 bg-indigo-600 text-white rounded text-sm hover:bg-indigo-700">
+                        class="px-4 py-2 text-sm text-white bg-indigo-600 rounded hover:bg-indigo-700">
                     Imprimir / Guardar PDF
                 </button>
             </div>

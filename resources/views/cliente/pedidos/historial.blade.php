@@ -1,13 +1,13 @@
 {{-- resources/views/cliente/pedidos/historial.blade.php --}}
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <h2 class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
             Historial de pedidos
         </h2>
     </x-slot>
 
     <div class="py-8">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
 
             @if (session('success'))
                 <div class="mb-4 text-sm text-green-500">
@@ -16,13 +16,13 @@
             @endif
 
             @if ($pedidos->isEmpty())
-                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
+                <div class="p-6 overflow-hidden bg-white shadow-sm dark:bg-gray-800 sm:rounded-lg">
                     <p class="text-gray-500 dark:text-gray-400">
                         Aún no tienes pedidos registrados.
                     </p>
                 </div>
             @else
-                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
+                <div class="p-6 overflow-hidden bg-white shadow-sm dark:bg-gray-800 sm:rounded-lg">
                     <table class="min-w-full text-sm text-left">
                         <thead>
                             <tr class="border-b border-gray-700">
@@ -50,7 +50,7 @@
                                     </td>
                                     <td class="px-3 py-2">
                                         <a href="{{ route('cliente.pedidos.show', $pedido) }}"
-                                           class="text-indigo-400 hover:underline text-xs">
+                                           class="text-xs text-indigo-400 hover:underline">
                                             Ver factura
                                         </a>
                                     </td>
